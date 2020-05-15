@@ -177,3 +177,110 @@ markyun.Event = {
   }
 }
 ```
+
+## 面试
+1. javascript的typeof返回那些数据类型？
+`object number function boolean undefined string`
+
+2. 检测数组的几种方式
+`Array.isArray(arr)`
+`arr.toString().call([]) // [Object Array]`
+```js
+// 获取数据类型 类似typeof 但比typeof强大
+function getType(v){
+  // .+?  惰匹匹配
+  return Object.prototype.toString.call(v).match(/\[object (.+?)\]/)[1].toLowerCase()
+}
+getType([]) // "array"
+getType(NaN) // "number"
+getType(Symbol(1)) // "symbol"
+getType(BigInt("9007199254740995")) // "bigint"
+getType(null) // "null"
+getType(undefined) // "undefined"
+getType('0') // "string"
+getType({}) // "object"
+getType(parseInt) // "function"
+getType(new Date()) // "date"
+```
+
+
+3. javascript继承的方式？
+`原型链继承 借用构造函数继承 原型+构造函数继承 寄生式继承`
+```js
+// 原型继承
+function Animal () {
+    this.age = 20
+}
+function Cat () {
+    this.name = 'jack'
+}
+Cat.prototype.say = function(){
+    console.log(this.name);
+}
+new Cat().say() // jack
+       
+// 原型链继承
+function Animal () {
+    this.age = 20
+}
+function Cat () {
+    this.name = 'jack'
+}
+var cat = new Cat()
+console.log(cat.name); // jaack
+console.log(cat.age); // undefined
+// 让Cat对象拥有了Animal对象的属性和方法
+Cat.prototype = new Animal()
+var cat = new Cat()
+console.log(cat.name); // jaack
+console.log(cat.age); // 20
+
+// 借用构造函数继承
+function Animal () {
+    this.age = 20
+}
+function Cat () {
+    Animal.call(this)
+    this.name = 'jack'
+}
+var cat = new Cat()
+console.log(cat.name); // jaack
+console.log(cat.age); // 20
+
+// 原型 + 构造函数继承组合继承
+```
+
+#### 如何理解闭包?
+使用闭包主要是为了设计私有的方法和变量.
+闭包的优点是可以避免全局变量的污染
+闭包的缺点是变量会常驻内存,会增大内存使用量,使用不当很容易造成内存泄漏
+闭包的三个特性:
+  函数嵌套函数
+  函数内部可以引用外部的参数和变量
+  参数和变量不会被垃圾回收机制回收
+
+
+#### 用js将字符串str的所有单词的首字母大写
+```js     
+var test = 'a tom is stupid,sda.';
+var a = test.replace(/\b\w+\b/g,function(word){
+  return word.substr(0,1).toUpperCase() + word.substr(1)
+})
+console.log(a)  // A Tom Is Stupid,Sda.
+```
+
+#### “use strict” 严格模式有哪些问题
+A.全局变量必须显示声明,给一个未用var声明的全局变量赋值会报错
+B.禁止删除变量, configurable设置为true的属性才能被删除
+C.对象不能有重名的属性,函数不能有重名的参数
+D.函数必须声明在顶层(if/for中声明函数会报错)
+
+#### 栈和队列的区别
+栈的插入和删除操作都是在一端进行的,而队列的操作却是在两端进行的.
+队列先进先出,栈先进后出
+栈只允许在末尾一端进行插入和删除,而队列只允许在末尾插入,在表头一端进行删除
+
+#### 栈和堆的区别
+栈区(stack) 由编译器自动分配释放, 存放函数的参数值,局部变量的值等     一种先进后出的数据结构
+堆区(heap)  一般由程序员分配释放, 若程序员不释放,程序结束时可能被系统回收.   堆可以被看成是一棵树
+
