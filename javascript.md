@@ -1,7 +1,30 @@
 #### JavaScript的数据类型都有什么？
-* 基本数据类型：String,boolean,Number,Undefined, Null, symbol, bigint
+* 基本数据类型：String,boolean,Number,Undefined, Null, symbol(es6), bigint(es10)
 * 引用数据类型：Object(Array,Date,RegExp,Function)
 #### javascript的typeof返回哪些数据类型
+1. javascript的typeof返回那些数据类型？
+`object number function boolean undefined string symbol bigint`
+
+2. 检测数组的几种方式
+`Array.isArray(arr)`
+`arr.toString().call([]) // [Object Array]`
+```js
+// 获取数据类型 类似typeof 但比typeof强大
+function getType(v){
+  // .+?  惰匹匹配
+  return Object.prototype.toString.call(v).match(/\[object (.+?)\]/)[1].toLowerCase()
+}
+getType([]) // "array"
+getType(NaN) // "number"
+getType(Symbol(1)) // "symbol"
+getType(BigInt("9007199254740995")) // "bigint"
+getType(null) // "null"
+getType(undefined) // "undefined"
+getType('0') // "string"
+getType({}) // "object"
+getType(parseInt) // "function"
+getType(new Date()) // "date"
+```
 #### 事件绑定和普通事件有什么区别
 * 普通事件onclick的方法不支持添加多个事件，最下面的事件会覆盖上面的
 * 事件绑定（addEventListener）方式添加事件可以添加多个, 支持事件冒泡和事件捕获
@@ -178,53 +201,15 @@ markyun.Event = {
 }
 ```
 
-## 面试
-1. javascript的typeof返回那些数据类型？
-`object number function boolean undefined string`
-
-2. 检测数组的几种方式
-`Array.isArray(arr)`
-`arr.toString().call([]) // [Object Array]`
-```js
-// 获取数据类型 类似typeof 但比typeof强大
-function getType(v){
-  // .+?  惰匹匹配
-  return Object.prototype.toString.call(v).match(/\[object (.+?)\]/)[1].toLowerCase()
-}
-getType([]) // "array"
-getType(NaN) // "number"
-getType(Symbol(1)) // "symbol"
-getType(BigInt("9007199254740995")) // "bigint"
-getType(null) // "null"
-getType(undefined) // "undefined"
-getType('0') // "string"
-getType({}) // "object"
-getType(parseInt) // "function"
-getType(new Date()) // "date"
-```
-
-
-3. javascript继承的方式？
+#### javascript继承的方式？
 `原型链继承 借用构造函数继承 原型+构造函数继承 寄生式继承`
 ```js
-// 原型继承
+// 1. 原型链继承
 function Animal () {
-    this.age = 20
+  this.age = 20
 }
 function Cat () {
-    this.name = 'jack'
-}
-Cat.prototype.say = function(){
-    console.log(this.name);
-}
-new Cat().say() // jack
-       
-// 原型链继承
-function Animal () {
-    this.age = 20
-}
-function Cat () {
-    this.name = 'jack'
+  this.name = 'jack'
 }
 var cat = new Cat()
 console.log(cat.name); // jaack
@@ -235,19 +220,33 @@ var cat = new Cat()
 console.log(cat.name); // jaack
 console.log(cat.age); // 20
 
-// 借用构造函数继承
+// 2. 借用构造函数继承
 function Animal () {
-    this.age = 20
+  this.age = 20
 }
 function Cat () {
-    Animal.call(this)
-    this.name = 'jack'
+  // Cat的所有对象借用了Animal对象的构造函数
+  Animal.call(this)
+  this.name = 'jack'
 }
 var cat = new Cat()
 console.log(cat.name); // jaack
 console.log(cat.age); // 20
 
-// 原型 + 构造函数继承组合继承
+// 3. 原型 + 构造函数继承组合继承
+// 4. 寄生式继承
+function Person(name, age){
+  this.name = name
+  this.age = age
+}
+function  createPerson(name, age){
+  var obj = {}
+  Person.call(obj, name, age)
+  return obj
+}
+var person = createPerson('tew', 28)
+console.log(person) // {name: "tew", age: 28}
+console.log(person.constructor) // ƒ Object() { [native code] }
 ```
 
 #### 如何理解闭包?
