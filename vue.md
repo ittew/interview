@@ -1,6 +1,6 @@
 ## 怎么理解MVVM模式的这些框架？ 即Model-View-ViewModel
-1. M就是Model模型层，存的一个数据对象。
-2. V就是View视图层，所有的html节点在这一层。
+1. M就是Model层代表数据模型，定义数据修改和操作的业务逻辑。
+2. V就是View视图层，它负责将数据模型转化成UI 展现出来，所有的html节点在这一层。
 3. VM就是ViewModel，它通过data属性连接Model模型层，通过el属性连接View视图层。
 
 Vue是以数据为驱动的，Vue自身将DOM和数据进行绑定，一旦创建绑定，DOM和数据将保持同步，每当数据发生变化， DOM会跟着变化。
@@ -57,9 +57,13 @@ DOM Listeners和Data Bindings是实现双向绑定的关键。 DOM Listeners监�
 3、待属性变动dep.notice()通知时，能调用自身的update()方法，并触发Compile中绑定的回调，则功成身退。
 第四步：MVVM作为数据绑定的入口，整合Observer、Compile和Watcher三者，通过Observer来监听自己的model数据变化，通过Compile来解析编译模板指令，最终利用Watcher搭起Observer和Compile之间的通信桥梁，达到数据变化 -> 视图更新；视图交互变化(input) -> 数据model变更的双向绑定效果。
 
+## 基础
+
 * v-show 指令， v-if 的区别
 条件渲染指令，无论v-show的值为true或false，元素都会存在于HTML代码中； 
-而只有当v-if的值为true，元素才会存在于HTML代码中。 v-show 指令只是设置了元素 CSS的 style 值
+而只有当v-if的值为true，元素才会存在于HTML代码中。
+v-show指令是通过修改元素的display的CSS属性让其显示或者隐藏
+v-if指令是直接销毁和重建DOM达到让元素显示和隐藏的效果
 
 * 如何让 css 只在当前组件中起作用
 如果希望组件内写的css只对当前组件起作用，只需要在style中写入scoped，即：`<style scoped></style>`
@@ -71,6 +75,11 @@ keep-alive 的含义：把切换出去的组件保留在内存中，可以保留
 * Vuejs 组件
 vuejs 构建组件使用
 Vue.component('componentName',{ /*component*/ }) ； 这里注意一点，组件要先注册再使用
+
+* 为什么使用key？
+`当有相同标签名的元素切换时，需要通过 key 特性设置唯一的值来标记以让 Vue 区分它们，否则 Vue 为了效率只会替换相同标签内部的内容`
+
+
 
 
 * Vue.js 和 AngularJS 之间的区别是什么 ? 
