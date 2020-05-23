@@ -7,6 +7,9 @@ Vue是以数据为驱动的，Vue自身将DOM和数据进行绑定，一旦创�
 ViewModel是Vue的核心，它是Vue的一个实例。Vue实例时作用域某个HTML元素上
 DOM Listeners和Data Bindings是实现双向绑定的关键。 DOM Listeners监听页面所有 View层 DOM元素的变化，当发生变化， Model层的数据随之变化； Data Bindings 监听Model层的数据，当数据发生变化， View 层的 DOM元素随之变化。
 
+## vue组件通信
+* props
+
 
 ## vue生命周期
 1. 什么是vue生命周期？
@@ -117,3 +120,19 @@ React 的另一个问题是：由于 DOM 更新完全交由 Virtual DOM 管理�
 制 DOM 是就有点棘手了 （虽然理论上你可以， 但这样做时你本质上在对抗 React 的设计思
 想）。对于需要复杂时间控制的动画来说这就变成了一项很讨人厌的限制。 在这方面， Vue.js 
 允许更多的灵活性，并且有不少用 Vue.js 构建的富交互实例
+
+* 相同点
+  - 都有组件化开发和Virtual DOM
+  - 都支持props进行父子组件间数据通信
+  - 都支持数据驱动视图，不直接操作真实DOM，更新状态数据界面就自动更新
+  - 都支持服务端渲染
+  - 都支持native的方案，React Native及Weex
+* 不同点
+  - 数据绑定：vue实现了数据的双向绑定， react数据流动是单向的
+  - 组件写法不一样，React采用JSX, html和css全写进js中， vue单文件组件格式（html，css，js在同一个文件）
+  - React中state数据，需要使用setState去改变
+  - virtual Dom不一样， vue会跟踪每一个组件的依赖关系， 不需要重新渲染整个组件树，React每当应用状态改变时，全部组件都会重新渲染（使用shouldComponentUpdate控制）
+
+
+## Vuex
+Vuex是专门为vue应用程序开发的状态管理的vue插件， 集中式管理vue多个组件共享的状态和从后台获取的数据
