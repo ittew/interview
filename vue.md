@@ -63,10 +63,9 @@ DOM Listeners和Data Bindings是实现双向绑定的关键。 DOM Listeners监�
 ## 基础
 
 * v-show 指令， v-if 的区别
-条件渲染指令，无论v-show的值为true或false，元素都会存在于HTML代码中； 
-而只有当v-if的值为true，元素才会存在于HTML代码中。
-v-show指令是通过修改元素的display的CSS属性让其显示或者隐藏
-v-if指令是直接销毁和重建DOM达到让元素显示和隐藏的效果
+v-show指令是通过修改元素的display的CSS属性让其显示或者隐藏， 初始渲染消耗高
+v-if指令是直接销毁和重建DOM达到让元素显示和隐藏的效果， 有更高的切换消耗
+如果需要频繁的切换， 使用v-show更好，如果条件不太可能改变则用v-if
 
 * 如何让 css 只在当前组件中起作用
 如果希望组件内写的css只对当前组件起作用，只需要在style中写入scoped，即：`<style scoped></style>`
@@ -80,10 +79,13 @@ vuejs 构建组件使用
 Vue.component('componentName',{ /*component*/ }) ； 这里注意一点，组件要先注册再使用
 
 * 为什么使用key？
-`当有相同标签名的元素切换时，需要通过 key 特性设置唯一的值来标记以让 Vue 区分它们，否则 Vue 为了效率只会替换相同标签内部的内容`
+`当有相同标签名的元素切换时，需要设置key来标记唯一的元素，让Vue 区分它们，否则 Vue 为了效率只会替换相同标签内部的内容`
 
+* 计算属性computed与methods普通方法区别
+`计算属性中的结算结果会被缓存`
 
-
+* v-for中为啥要加 :key 
+`循环项上增加 :key  提升循环显示的性能  循环项上加唯一key值  最好不要用 index  尽量用数据id  `
 
 * Vue.js 和 AngularJS 之间的区别是什么 ? 
 Vue.js 是一个更加灵活开放的解决方案。它允许你以希望的方式组织你的应用程序，而不
