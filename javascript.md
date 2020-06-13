@@ -1,6 +1,6 @@
 #### JavaScript的数据类型都有什么？
-* 基本数据类型：String,boolean,Number,Undefined, Null, symbol(es6), bigint(es10)
-* 引用数据类型：Object(Array,Date,RegExp,Function)
+* 基本数据类型：string,boolean,number,undefined, null, symbol(es6), bigInt(es10)
+* 引用数据类型：object(Array,Date,RegExp,Function)
 #### javascript的typeof返回哪些数据类型
 1. javascript的typeof返回那些数据类型？
 `object number function boolean undefined string symbol bigint`
